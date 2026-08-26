@@ -129,7 +129,7 @@ final class ArchiveScanner implements Callable<Integer> {
 		}
 		catch (final IOException e) {
 			System.err.print("Unable to resolve base path: ");
-			System.out.flush();
+			System.err.flush();
 			e.printStackTrace(System.err);
 			return ExitCode.SOFTWARE;
 		}
