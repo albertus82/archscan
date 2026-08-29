@@ -60,6 +60,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v6
 
+    - name: Setup Java
+      uses: actions/setup-java@v5
+      with:
+        distribution: zulu
+        java-version: ${{ matrix.java }}
+
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
     # or others). This is typically only required for manual builds.
@@ -71,11 +77,6 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-
-    - uses: actions/setup-java@v5
-      with:
-        distribution: zulu
-        java-version: ${{ matrix.java }}
 
     - name: Delombok
       run: mvn clean process-test-sources -P codeql -B -V -e -ntp -Dmaven.main.skip=true && mvn clean
