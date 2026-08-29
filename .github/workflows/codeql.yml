@@ -47,7 +47,7 @@ jobs:
           build-mode: none
         - language: java-kotlin
           java: 25
-          build-mode: none # This mode only analyzes Java. Set this to 'autobuild' or 'manual' to analyze Kotlin too.
+          build-mode: manual # This mode only analyzes Java. Set this to 'autobuild' or 'manual' to analyze Kotlin too.
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'rust', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -71,6 +71,11 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+
+    - uses: actions/setup-java@v5
+      with:
+        distribution: zulu
+        java-version: ${{ matrix.java }}
 
     - name: Delombok
       run: mvn clean process-test-sources -P codeql -B -V -e -ntp -Dmaven.main.skip=true && mvn clean
