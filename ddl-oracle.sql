@@ -128,6 +128,7 @@ CREATE TABLE myschema.archive_entries (
     entry_name            VARCHAR2 (1024 CHAR) NOT NULL,
     uncompressed_size     NUMBER (19, 0),
     compressed_size       NUMBER (19, 0),
+    ratio_percent         NUMBER (3) GENERATED ALWAYS AS (FLOOR (100 * compressed_size / uncompressed_size)) VIRTUAL,
     last_modified         TIMESTAMP (9) WITH TIME ZONE,
     creation_time         TIMESTAMP (9) WITH TIME ZONE,
     last_access           TIMESTAMP (9) WITH TIME ZONE,
