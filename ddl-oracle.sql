@@ -49,6 +49,7 @@ CREATE TABLE myschema.archives (
     entry_count           NUMBER (10, 0) NOT NULL,
     total_packed_size     NUMBER (19, 0),
     total_unpacked_size   NUMBER (19, 0) NOT NULL,
+    ratio_percent         NUMBER (3) GENERATED ALWAYS AS (FLOOR (100 * total_packed_size / total_unpacked_size)) VIRTUAL,
     archive_comment       CLOB,
     CONSTRAINT archives_uk_archive_name_archive_size UNIQUE (archive_name, archive_size) USING INDEX TABLESPACE myschema_idx
 )
